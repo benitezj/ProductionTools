@@ -1,0 +1,5 @@
+#export command="svn copy $MYSVN/$1/trunk $MYSVN/$1/tags/$2 -m \"$3\""
+svn rm -m "" $MYSVN/$1/tags/$2
+export command="svn copy $MYSVN/$1/trunk $MYSVN/$1/tags/$2 -m\"\" "
+echo $command
+$command

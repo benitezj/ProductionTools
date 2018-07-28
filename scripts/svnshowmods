@@ -1,0 +1,9 @@
+for d in `/bin/ls . | grep -v RootCoreBin | grep -v genConf | grep -v x86_64-slc6-gcc`
+do 
+if [ -e $d/.svn/entries ] ; then
+cd $d
+echo "$d : "; 
+svnstatus
+cd ..
+fi
+done

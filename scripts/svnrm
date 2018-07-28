@@ -1,0 +1,5 @@
+for i in `svn status | grep \!`; do 
+if [ ! $i == \! ]; then
+svn rm $i 
+fi
+done

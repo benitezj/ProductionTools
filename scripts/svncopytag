@@ -1,0 +1,8 @@
+export pkg=$1
+export intag=$2
+export outtag=$3
+echo $pkg
+export command="svn copy $MYSVN/$pkg/tags/$intag $MYSVN/$pkg/tags/$outtag -m\"\" "
+echo $command
+svn rm -m "" $MYSVN/$pkg/tags/$outtag
+$command

@@ -1,0 +1,27 @@
+##copies all files in inpath to outpath recursively retaining the same .svn
+export inpath=$1
+export outpath=$2
+
+if [ "$inpath" == "" ] || [ "$outpath" == "" ] ; then
+   echo "Wrong input paths"
+   exit
+fi
+
+
+for f in `/bin/ls $inpath | grep -v .svn`; do 
+
+    if [ ! -d "$outpath/$f" ]; then
+        #echo $inpath/$f
+       
+        #safety check
+        export tmp=`echo $inpath/$f | grep $outpath`     
+        if [ "$tmp" != "" ]; then
+	   echo "cp $inpath/$f $outpath/$f"
+	   cp -f $inpath/$f $outpath/$f
+        fi       
+        
+    else
+        replacepkgFiles $inpath/$f $outpath/$f
+    fi 
+ 
+done

@@ -1,0 +1,15 @@
+export pkg=$1
+export tag=$2
+
+cd $pkg
+export pkgpath=`cat .svn/entries | grep "svn+ssh:" | grep $pkg`
+export path=`echo $pkgpath | awk -F ${pkg} '{print $1}'`
+
+if [ "$tag" == "trunk" ]; then
+ export url=$path$pkg/trunk
+else
+ export url=$path$pkg/tags/$tag
+fi
+
+svn switch $url
+cd ..

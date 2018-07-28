@@ -1,0 +1,27 @@
+export pkgname=$1
+export newname=$2
+export tmppath=$3
+if [ "$3" == "" ] ; then
+  echo "path not given"
+  exit
+fi
+
+
+for f in `/bin/ls $tmppath | grep -v RootCoreBin`; do 
+
+    if [ ! -d "$tmppath/$f" ]; then
+
+        export tmp=`echo $f | grep $pkgname`     
+ 	if [ "$tmp" != "" ]; then
+       	    #echo "$tmppath/$f" 
+     	    export newfile=`echo $f | sed "s/$pkgname/$newname/g"`
+            echo "mv $tmppath/$f  $tmppath/$newfile"
+	    mv $tmppath/$f  $tmppath/$newfile
+ 	fi       
+ 	
+    else
+        renamepkgFiles $pkgname $newname $tmppath/$f
+    fi 
+ 
+done
+

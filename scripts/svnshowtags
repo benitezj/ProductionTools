@@ -1,0 +1,11 @@
+for d in `/bin/ls -d */ | grep -v RootCoreBin`
+do 
+if [ -e $d/.svn/entries ] ; then
+
+export tg=`cat $d/.svn/entries | grep svn+ssh | grep tags | awk -F'tags/' '{print "(tag) "$2}'`
+export br=`cat $d/.svn/entries | grep svn+ssh | grep branches | awk -F'branches/' '{print "(branch) "$2}'`
+export tr=`cat $d/.svn/entries | grep svn+ssh | grep trunk | awk '{print "(trunk)"}'`
+echo "$d: $tr $br $tg"; 
+
+fi
+done

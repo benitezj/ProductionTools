@@ -1,0 +1,9 @@
+#copies from my current trunk to an external path with.
+#arguments required are:
+#$1 = package name
+#$2 = external path
+#$3 = tag name
+#$4 = commit message
+export command="svn copy $MYSVN/$1/trunk $2/$1/tags/$3"
+echo $command
+$command

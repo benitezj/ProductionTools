@@ -1,0 +1,36 @@
+export pkgname=$1
+export newname=$2
+export tmppath=$3
+if [ "$3" == "" ] ; then
+  echo "path not given"
+  exit
+fi
+
+
+for f in `/bin/ls $tmppath | grep -v RootCoreBin`; do 
+
+    if [ -d "$tmppath/$f" ]; then
+                
+        export tmp=`echo $f | grep $pkgname`     
+        if [ "$tmp" != "" ]; then
+           export newfile=`echo $f | sed "s/$pkgname/$newname/g"`
+           echo "mv $tmppath/$f  $tmppath/$newfile" >> ./renamepkgDirs.tmp
+        fi 
+
+
+        #check if there are more directories inside
+	export hasdirs=0
+        for ff in `/bin/ls $tmppath/$f`; do
+           if [ -d "$tmppath/$f/$ff" ]; then
+              export hasdirs=1
+	   fi
+  	done 
+       
+        if [ "$hasdirs" == "1" ]; then
+           renamepkgDirs $pkgname $newname $tmppath/$f
+        fi      
+
+    fi 
+ 
+done
+

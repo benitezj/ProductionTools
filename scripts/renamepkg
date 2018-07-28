@@ -1,0 +1,44 @@
+########################################################################
+###The following are all recursive functions must be executed in this order 
+########################################################################
+
+#############################
+##Replace contents of files
+############################
+renamepkgContents $1 $2 $3
+
+
+#############################
+##Replace file names
+#############################
+renamepkgFiles $1 $2 $3
+
+
+#############################
+###Renaming the directories is more difficult because paths change
+#############################
+##we need a tmp file to store the commands to be executed later
+rm -f ./renamepkgDirs.tmp
+rm -f ./renamepkgDirsReverse.tmp
+
+##rename the top directory if it matches
+export tmp=`echo $3 | grep $1`     
+if [ "$tmp" != "" ]; then
+  export newfile=`echo $3 | sed "s/$1/$2/g"`
+  echo "mv $3 $newfile" >> ./renamepkgDirs.tmp
+fi
+
+##find the directories that need renaming 
+renamepkgDirs $1 $2 $3
+
+##reverse the order of the commands
+tac ./renamepkgDirs.tmp >> ./renamepkgDirsReverse.tmp
+cat ./renamepkgDirsReverse.tmp
+
+##execute
+source ./renamepkgDirsReverse.tmp
+
+##clean up
+rm -f ./renamepkgDirs.tmp
+rm -f ./renamepkgDirsReverse.tmp
+

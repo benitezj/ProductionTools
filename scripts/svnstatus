@@ -1,0 +1,1 @@
+svn status | grep -v _C.d | grep -v x86_64 | grep -v genConf

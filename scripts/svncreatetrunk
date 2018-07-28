@@ -1,0 +1,13 @@
+export pkg=$1
+if [ "$pkg" == "" ]; then
+echo "No pkg provided"
+exit
+fi
+
+ svn rm $MYSVN/$pkg/trunk
+ svn mkdir -m "" $MYSVN/$pkg/trunk 
+ cd $pkg
+ svn import -m "" . $MYSVN/$pkg/trunk
+ cd ..
+ mv $pkg $pkg.bak
+ svn co $MYSVN/$pkg/trunk $pkg

@@ -1,0 +1,24 @@
+export pkg=$1
+if [ "$pkg" == "" ]; then
+echo "No pkg provided"
+exit
+fi
+
+##remove the trunk if was already there:
+svn rm  -m "" $MYSVN/$pkg/trunk 
+
+##create the directory struct, if it is already there will just complain
+ svn mkdir -m "" $MYSVN/$pkg 
+ svn mkdir -m "" $MYSVN/$pkg/trunk 
+ svn mkdir -m "" $MYSVN/$pkg/branches
+ svn mkdir -m "" $MYSVN/$pkg/tags
+
+###import the local package into the trunk, no need to remove .svn dirs, they will be ignored
+ cd $pkg
+ svn import -m "" . $MYSVN/$pkg/trunk
+ cd ..
+
+##create a backup of the original and switch to the newly created trunk
+ mv $pkg $pkg.bak
+ svn co $MYSVN/$pkg/trunk $pkg
+

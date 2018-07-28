@@ -1,0 +1,23 @@
+
+for d in `/bin/ls -d */ | grep -v RootCoreBin`
+do 
+if [ -e $d/.svn/entries ] ; then
+#echo "====== $d:"
+
+if [ $1 ] ; then
+
+cat $d/.svn/entries | grep 'svn+ssh' | grep trunk 
+cat $d/.svn/entries | grep 'svn+ssh' | grep tag 
+cat $d/.svn/entries | grep 'svn+ssh' | grep branches | grep -v dev
+
+else 
+
+cat $d/.svn/entries | grep 'svn+ssh' | grep trunk | awk -F'reps/' '{print $2}' 
+cat $d/.svn/entries | grep 'svn+ssh' | grep tag | awk -F'reps/' '{print $2}'
+cat $d/.svn/entries | grep 'svn+ssh' | grep branches | grep -v dev | awk -F'reps/' '{print $2}'
+
+fi
+
+fi
+#echo ""
+done

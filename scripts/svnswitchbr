@@ -1,0 +1,8 @@
+export pkg=$1
+export tag=$2
+cd $pkg
+export pkgpath=`cat .svn/entries | grep "svn+ssh:" | grep $pkg`
+export path=`echo $pkgpath | awk -F ${pkg} '{print $1}'`
+export url=$path$pkg/branches/$tag
+svn switch $url
+cd ..

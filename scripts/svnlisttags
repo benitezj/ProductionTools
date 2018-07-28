@@ -1,0 +1,5 @@
+export line=`cat $1/.svn/entries | grep svn | grep $1`
+#echo $line
+export dir=`echo $line | awk -F"$1" '{print $1}'`
+#echo $dir
+svn ls $dir/$1/tags/

@@ -1,0 +1,5 @@
+for i in `svn status | grep ? | grep -v _C.d | grep -v genConf | grep -v x86_64`; do 
+if [ ! $i == ? ]; then 
+svn add $i; 
+fi;
+done

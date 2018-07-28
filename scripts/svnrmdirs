@@ -1,0 +1,14 @@
+export tmppath=$1
+
+for f in `/bin/ls -a $tmppath`; do 
+
+   if [ "$f" == ".svn" ]; then
+      echo "rm $tmppath/$f"
+      rm -rf $tmppath/$f
+   else
+      if [ -d "$tmppath/$f" ] && [ "$f" != "." ] && [ "$f" != ".." ]; then
+          svnrmdirs $tmppath/$f
+      fi
+   fi 
+
+done
